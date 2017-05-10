@@ -1,0 +1,36 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ng-change</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>这个指令会在表单输入发生变化时计算给定表达式的值。因为要处理表单输入，这个指令要
+和 ngModel 联合起来使用。
+</p>
+<br/>
+<div ng-controller="EquationController">
+	<input type="text" ng-model="equation.x"
+	ng-change="change()" /><br/>
+	<code>{{ equation.output }}</code>
+</div>
+<p>上面的例子中，只要文本输入字段中的内容发生了变化就会改变 equation.x 的值，进而运
+行 change() 函数。</p>
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp',[])
+.controller('EquationController',function($scope) {
+	$scope.equation = {};
+	$scope.change = function() {
+		$scope.equation.output= parseInt($scope.equation.x) + 2;
+	};
+});
+</script>   
+</body>  
+</html>  

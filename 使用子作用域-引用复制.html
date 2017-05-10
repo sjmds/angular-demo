@@ -1,0 +1,42 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>使用子作用域</title>  
+<meta name="discription" content="无论点击哪个按钮，值都会进行同步修改">
+</head>  
+<body>  
+
+<br/>
+<div ng-controller="SomeController">
+	{{ someModel.someValue }}
+	<button ng-click="someAction()">Communicate to child</button>
+	<div ng-controller="ChildController">
+		{{ someModel.someValue }}
+		<button ng-click="childAction()">Communicate to parent</button>
+	</div>
+</div>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.controller('SomeController', function($scope) {
+	// 最佳实践，永远使用一个模式
+	$scope.someModel = {
+		someValue: 'hello computer'
+	}
+	$scope.someAction = function() {
+		$scope.someModel.someValue = 'hello human, from parent';
+	};
+})
+.controller('ChildController', function($scope) {
+	$scope.childAction = function() {
+		$scope.someModel.someValue = 'hello human, from child';
+	};
+});
+</script>   
+</body>  
+</html>  

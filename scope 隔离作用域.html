@@ -1,0 +1,64 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>scope 参数（隔离作用域</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>隔离作用域可能是 scope 属性三个选项中最难理解的一个，但也是最强大的。隔离作用域的
+概念是以面向对象编程为基础的。AngularJS指令的作用域中可以看到如Small Talk语言和SOLID
+原则的影子。</p>
+<p>具有隔离作用域的指令最主要的使用场景是创建可复用的组件，组件可以在未知上下文中使
+用，并且可以避免污染所处的外部作用域或不经意地污染内部作用域。</p>
+<p>创建具有隔离作用域的指令需要将 scope 属性设置为一个空对象 {} 。如果这样做了，指令的
+模板就无法访问外部作用域了：</p>
+
+
+<pre>
+angular.module('myApp', [])
+.controller('MainController', function($scope) {
+})
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		scope: {},
+		priority: 100,
+		template: '<div>Inside myDirective {{ myProperty }}</div>'
+	};
+});
+</pre>
+<div ng-controller='MainController'>
+Outside myDirective: {{ myProperty }}
+	<div my-directive ng-init="myProperty = 'wow, this is cool'">
+	Inside myDirective: {{ myProperty }}
+	</div>
+</div>
+<p>注意，这里为 myDirective 设置了一个高优先级。由于 ngInit 指令会以非零的优先
+级运行，这个例子将会优先运行 ngInit 指令，然后才是我们定义的指定，并且这个
+myProperty 在 $scope 对象中是有效的。</p>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.controller('MainController', function($scope) {
+})
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		scope: {},
+		priority: 100,
+		template: '<div>Inside myDirective {{ myProperty }}</div>'
+	};
+});
+</script>   
+</body>  
+</html>  

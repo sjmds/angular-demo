@@ -1,0 +1,27 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ng-if</title>  
+    <meta name="discription" content='使用 ng-if 指令可以完全根据表达式的值在DOM中生成或移除一个元素.ng-if 同 no-show 和 ng-hide 指令最本质的区别是，它不是通过CSS显示或隐藏DOM节点，而
+是真正生成或移除节点。 ngIf 重新创建元素时用的是它们编译后的状态'>
+</head>  
+<body>  
+
+<br/>
+<div ng-if="2+2===5">
+Won't see this DOM node, not even in the source code
+</div>
+<div ng-if="2+2===4">
+Hi, I do exist
+</div>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

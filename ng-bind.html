@@ -1,0 +1,33 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title> ng-bind && ng-cloak</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>HTML加载含有 {{ }} 语法的元素后并不会立刻渲染它们，导致未渲染内容闪烁（Flash of
+Unrendered Content，FOUC）。我可以用 ng-bind 将内容同元素绑定在一起避免FOUC。内容会被
+当作子文本节点渲染到含有 ng-bind 指令的元素内。
+</p>
+<p>除使用 ng-bind 来避免未渲染元素闪烁，还可以在含有 {{ }} 的元素上使用 ng-cloak 指令。ng-cloak 指令会将内部元素隐藏，直到路由调用对应的页面时才显示出来。</p>
+<br/>
+<div ng-init="greeting='Hello'">
+to bind
+	<p ng-bind="greeting"></p>
+</div
+<div ng-init="greeting='HelloWorld'">
+to cloak
+<p ng-cloak>{{ greeting }}</p>
+</div>
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

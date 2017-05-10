@@ -1,0 +1,47 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title> 使用子作用域</title>  
+<meta name="discription" content="使用子作用域意味着其上的数据模型和操作在应用的其他地方
+是无法访问的，只能被这个作用域内的指令及其子作用域访问。其次，显式声明了数据模型，我
+们说过，这非常重要。为了展示这为什么重要，看一下这个例子的变体。这个例子中，在已有的
+控制器中嵌套了第二个控制器，并且没有设置模型对象的属性.由于原型继承的关系，修改父级对象中的 someBareValue 会同时修改子对象中的值，但反之
+则不行。">
+</head>  
+<body>  
+
+<br/>
+<div ng-controller="SomeController">
+	{{ someBareValue }}
+	<button ng-click="someAction()">Communicate to child</button>
+	<div ng-controller="ChildController">
+		{{ someBareValue }}
+		<button ng-click="childAction()">Communicate to parent</button>
+	</div>
+</div>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.controller('SomeController', function($scope) {
+	// 反模式，裸值
+	$scope.someBareValue = 'hello computer';
+	// 设置 $scope 本身的操作，这样没问题
+	$scope.someAction = function() {
+		// 在SomeController和ChildController中设置{{ someBareValue }}
+		$scope.someBareValue = 'hello human, from parent';
+	};
+})
+.controller('ChildController', function($scope) {
+	$scope.childAction = function() {
+		// 在ChildController中设置{{ someBareValue }}
+		$scope.someBareValue = 'hello human, from child';
+	};
+});
+</script>   
+</body>  
+</html>  

@@ -1,0 +1,45 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>理解双向数据绑定，以及ng-model 在这个过程中的行为</title>  
+<meta name="discription" content="在这个流程中，给两个方向的绑定都添加一个文本输入字段。通过这两个输入字段可以方便
+地观察作用域是如何在DOM中通过原型继承链接在一起的">
+
+</head>  
+<body>  
+<label>Their URL field:</label>
+<input type="text" ng-model="theirUrl">
+<div my-directive some-attr="theirUrl" my-link-text="Click me to go to Google"></div>
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		replace: true,
+		scope: {
+			myUrl: '=someAttr',
+			myLinkText: '@' 
+		},
+		// template: 
+		// '<div>'+
+		// 	'<label>My Url Field:</label>'+
+		// 	'<input type="text"'+
+		// 	'ng-model="myUrl" />'+
+		// 	'<a href="{{myUrl}}">{{myLinkText}}</a>'+
+		// '</div>'
+		template: '\
+		<div>\
+			<label>My Url Field:</label>\
+			<input type="text" ng-model="myUrl" />\
+			<a href="{{myUrl}}">{{myLinkText}}</a>\
+		</div>'
+	};
+});
+
+</script>   
+</body>  
+</html>  

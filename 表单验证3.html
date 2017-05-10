@@ -1,0 +1,101 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>表单验证--使用 ngMessage 指令检查的带有自定义的消息的指令</title>  
+<style type="text/css">  
+*{  
+    margin: 0;  
+    padding: 0;  
+}  
+
+</style>  
+</head>  
+<body>  
+   
+<form name="signup_form" novalidate ng-submit="signupForm()" ng-controller="signupController" ensure-unique="/api/checkUsername.json">
+    <label>Your name</label>
+    <input type="text" placeholder="Username" name="username" ng-model="signup.username" ng-minlength=3 ng-maxlength=20 required />
+    <div class="error" ng-messages="signup_form.username.$error" ng-messages-multiple>
+        <div ng-message="required">Make sure you enter your username</div>
+        <div ng-message="checkingAvailability">
+            Checking...
+        </div>
+        <div ng-message="usernameAvailablity">
+            The username has already been taken. Please choose another
+        </div>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+    
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+var app=angular.module('myApp',['ngMessages'])
+app.controller('signupController', function($scope,ngMessages) {
+    $scope.submitted = false;
+    $scope.signupForm = function() {
+        if ($scope.signup_form.$valid) {
+            // 正常提交
+        } else {
+            $scope.signup_form.submitted = true;
+        }
+    }
+});
+app.directive('ngFocus', [function() {
+    var FOCUS_CLASS = "ng-focused";
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl) {
+            ctrl.$focused = false;
+            element
+            .bind('focus', function(evt) {
+                element.addClass(FOCUS_CLASS);
+                scope.$apply(function() {
+                    ctrl.$focused = true;
+                });
+            })
+            .bind('blur', function(evt) {
+                element.removeClass(FOCUS_CLASS);
+                scope.$apply(function() {
+                    ctrl.$focused = false;
+                });
+            });
+        }
+    };
+}]);
+app.directive('ensureUnique', function($http) {
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attrs, ctrl) {
+            var url = attrs.ensureUnique;
+            ctrl.$parsers.push(function(val) {
+                if (!val || val.length === 0) {
+                    return;
+                }
+                ngModel.$setValidity('checkingAvailability', true);
+                ngModel.$setValidity('usernameAvailablity', false);
+                $http({
+                    method: 'GET',
+                    url: url,
+                    params: {
+                     username: val
+                    }
+                }).success(function() {
+                    ngModel.$setValidity('checkingAvailability', false);
+                    ngModel.$setValidity('usernameAvailablity', true);
+
+                })['catch'](function() {
+                    ngModel.$setValidity('checkingAvailability', false);
+                    ngModel.$setValidity('usernameAvailablity', false);
+                });
+                return val;
+            })
+        }
+    }
+});
+</script>   
+</body>  
+</html>  

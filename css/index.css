@@ -1,0 +1,7 @@
+@charset "gb2312";
+/* CSS Document */
+
+*{margin:0;padding:0;list-style:none;}
+ul, ol, li {
+	list-style:none;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ngModelController 中有几个属性可以用来检查甚至修改视图。</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>1.  $viewValue<br/>
+$viewValue 属性保存着更新视图所需的实际字符串。<br/>
+2.  $modelValue<br/>
+$modelValue 由数据模型持有。 $modelValue 和 $viewValue 可能是不同的，取决于 $parser
+流水线是否对其进行了操作。<br/>
+3.  $parsers<br/>
+$parsers 的值是一个由函数组成的数组，其中的函数会以流水线的形式被逐一调用。
+ngModel 从DOM中读取的值会被传入 $parsers 中的函数，并依次被其中的解析器处理。
+这是为了对值进行处理和修饰。我们已经简单介绍过验证流水线是如何工作的了。更多关于
+通过创建 $parser 来进行验证的信息请查阅10.6节。<br/>
+4.  $formatters<br/>
+$formatters 的值是一个由函数组成的数组，其中的函数会以流水线的形式在数据模型的值
+发生变化时被逐一调用。它和 $parser 流水线互不影响，用来对值进行格式化和转换，以便在绑
+定了这个值的控件中显示。<br/>
+5.  $viewChangeListeners<br/>
+$viewChangeListeners 的值是一个由函数组成的数组，其中的函数会以流水线的形式在视
+图中的值发生变化时被逐一调用。通过 $viewChangeListeners ，可以在无需使用 $watch 的情况
+下实现类似的行为。由于返回值会被忽略，因此这些函数不需要返回值。<br/>
+6.  $error<br/>
+$error 对象中保存着没有通过验证的验证器名称以及对应的错误信息。<br/>
+7.  $pristine<br/>
+$pristine 的值是布尔型的，可以告诉我们用户是否对控件进行了修改。<br/>
+8.  $dirty<br/>
+$dirty 的值和 $pristine 相反，可以告诉我们用户是否和控件进行过交互。<br/>
+9.  $valid<br/>
+$valid 值可以告诉我们当前的控件中是否有错误。当有错误时值为 false ，没有错误时值为 true 。<br/>
+10.  $invalid<br/>
+$invalid 值可以告诉我们当前控件中是否存在至少一个错误，它的值和 $valid 相反。</p>
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

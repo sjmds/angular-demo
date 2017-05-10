@@ -1,0 +1,38 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ng-show/ng-hide</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>ng-show 和 ng-hide 根据所给表达式的值来显示或隐藏HTML元素。当赋值给 ng-show 指令的
+值为 false 时元素会被隐藏。类似地，当赋值给 ng-hide 指令的值为 true 时元素也会被隐藏。
+元素的显示或隐藏是通过移除或添加 ng-hide 这个CSS类来实现的。 .ng-hide 类被预先定义
+在了AngularJS的CSS文件中，并且它的 display 属性的值为 none （用了 !important 标记）。</p>
+<br/>
+<div ng-show="2 + 2 == 5">
+2 + 2 isn't 5, don't show
+</div>
+<div ng-show="2 + 2 == 4">
+2 + 2 is 4, do show
+</div>
+<div ng-hide="2 + 2 == 5">
+2 + 2 isn't 5, don't hide
+</div>
+<div ng-hide="2 + 2 == 4">
+2 + 2 is 4, do hide
+</div>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

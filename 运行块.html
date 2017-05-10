@@ -1,0 +1,62 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>运行块</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>和配置块不同，运行块在注入器创建之后被执行，它是所有AngularJS应用中第一个被执行的方法。</p>
+<p>运行块是AngularJS中与 main 方法最接近的概念。运行块中的代码块通常很难进行单元测试，
+它是和应用本身高度耦合的。</p>
+<p>运行块通常用来注册全局的事件监听器。例如，我们会在 .run() 块中设置路由事件的监听器
+以及过滤未经授权的请求。</p>
+<p>假设我们需要在每次路由发生变化时，都执行一个函数来验证用户的权限，放置这个功能唯
+一合理的地方就是 run 方法：</p>
+<pre>
+angular.module('myApp', [])
+.run(function($rootScope, AuthService) {
+	$rootScope.$on('$routeChangeStart', function(evt, next, current) {
+		// 如果用户未登录
+		if (!AuthService.userLoggedIn()) {
+			if (next.templateUrl === "login.html") {
+				// 已经转向登录路由因此无需重定向
+			} else {
+				$location.path('/login');
+			}
+		}
+	});
+});
+</pre>
+<p>run() 函数接受个参数。<br/>
+  initializeFn （函数）AngularJS在注入器创建后会执行这个函数。</p>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.run(function($rootScope, AuthService) {
+	$rootScope.$on('$routeChangeStart', function(evt, next, current) {
+		// 如果用户未登录
+		if (!AuthService.userLoggedIn()) {
+			if (next.templateUrl === "login.html") {
+				// 已经转向登录路由因此无需重定向
+			} else {
+				$location.path('/login');
+			}
+		}
+	});
+});
+</script>   
+</body>  
+</html>  

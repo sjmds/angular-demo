@@ -1,0 +1,87 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>scope 参数（布尔型或对象）</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<pre>scope 参数是可选的，可以被设置为 true 或一个对象。默认值是 false 。
+当 scope 设置为 true 时，会从父作用域继承并创建一个新的作用域对象。
+如果一个元素上有多个指令使用了隔离作用域，其中只有一个可以生效。只有指令模板中的
+根元素可以获得一个新的作用域。因此，对于这些对象来说 scope 默认被设置为 true 。
+内置指令 ng-controller 的作用，就是从父级作用域继承并创建一个新的子作用域。它会创
+建一个新的从父作用域继承而来的子作用域。</pre>
+
+<pre>angular.module('myApp', [])
+.controller('SomeController', function($scope) {
+// 可以留空，但需要被定义
+})</pre>
+<p>为了进一步证明作用域的继承机制是向下而非向上进行的，下面再看另外一个例子，展示的
+是 {{ aThirdProperty }} 从父作用域继承而来：</p>
+
+<p>如果要创建一个能够从外部原型继承作用域的指令，将 scope 属性设置为 true </p>
+<pre>
+angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		scope: true
+	};
+});
+</pre>
+<p>下面用指令来改变DOM的作用域：</p>
+
+<p>如果要创建一个能够从外部原型  继承作用域的指令，将 scope 属性设置为 true ：</p>
+<pre>
+angular.module('myApp', [])
+.controller('SomeController', function($scope) {
+// 可以留空，但需要被定义
+})
+.controller('SecondController', function($scope) {
+// 同样可以留空
+})
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		scope: true
+	};
+});
+</pre>
+<div ng-app="myApp" ng-init="someProperty = 'some data'"></div>
+<div ng-init="siblingProperty='moredata'">Inside Div Two: {{ aThirdProperty }}
+	<div ng-init="aThirdProperty = 'data for 3rd property'" ng-controller="SomeController">Inside Div Three: {{ aThirdProperty }}
+		<div ng-controller="SecondController">Inside Div Four: {{ aThirdProperty }}
+		<br>
+		Outside myDirective: {{ myProperty }}
+			<div my-directive ng-init="myProperty = 'wow, this is cool'">Inside myDirective: {{ myProperty }}<div>
+		</div>
+	</div>
+</div>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.controller('SomeController', function($scope) {
+// 可以留空，但需要被定义
+})
+.controller('SecondController', function($scope) {
+// 同样可以留空
+})
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		scope: true
+	};
+});
+</script>   
+</body>  
+</html>  

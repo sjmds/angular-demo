@@ -1,0 +1,36 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title> ng-checked</title>  
+<meta name="discription" content="通过 ng-checked 将某个表达式同是否出现 checked 属性进行绑定">
+</head>  
+<body>  
+<label>someProperty = {{someProperty}}</label>
+<input type="checkbox"
+ng-checked="someProperty"
+ng-init="someProperty = true"
+ng-model="someProperty">
+<br/>
+<label>someProperty = {{anotherProperty}}</label>
+<input type="checkbox"
+ng-checked="anotherProperty"
+ng-init="anotherProperty = false"
+ng-model="anotherProperty">
+
+
+
+
+
+
+
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

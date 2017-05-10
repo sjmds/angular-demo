@@ -1,0 +1,32 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title> ng-click</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>ng-click 用来指定一个元素被点击时调用的方法或表达式。</p>
+<br/>
+<div ng-controller="CounterController">
+	<button ng-click="count = count + 1" ng-init="count=0">Increment</button>
+	count: {{ count }}
+	<button ng-click="decrement()">Decrement</button>
+<div>
+
+
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp',[])
+.controller('CounterController', function($scope) {
+	$scope.decrement = function() {
+		$scope.count = $scope.count - 1;
+	};
+})
+</script>   
+</body>  
+</html>  

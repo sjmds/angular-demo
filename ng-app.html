@@ -1,0 +1,31 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title> ng-app</title>  
+    <meta name="discription" content="任何具有 ng-app 属性的DOM元素将被标记为 $rootScope 的起始点。
+$rootScope 是作用域链的起始点，任何嵌套在 ng-app 内的指令都会继承它。
+在JavaScript代码中通过 run 方法来访问 $rootScope">
+</head>  
+<body>  
+{{ someProperty }}
+<br/>
+<button ng-click="someAction()">someAction</button>
+
+
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.run(function($rootScope) {
+	$rootScope.someProperty = 'hello computer';
+	$rootScope.someAction = function() {
+		$rootScope.someProperty = 'hello human';
+	};
+});
+</script>   
+</body>  
+</html>  

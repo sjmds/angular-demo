@@ -1,0 +1,62 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>transclude 是一个可选的参数。如果设置了，其值必须为 true ，它的默认值是 false 。</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>嵌入允许指令的使用者方便地提供自己的HTML模板，其中可以包含独特的状态和行为，并
+对指令的各方面进行自定义。</p>
+<p>如果指令使用了 transclude 参数，那么在控制器（下面马上会介绍）中就无法正常监听数
+据模型的变化了</p>
+
+
+<div sideboxtitle="Links">
+	<ul>
+		<li>First link</li>
+		<li>Second link</li>
+	</ul>
+</div>
+<div sideboxtitle="TagCloud">
+	<div class="tagcloud">
+		<a href="">Graphics</a>
+		<a href="">AngularJS</a>
+		<a href="">D3</a>
+		<a href="">Front-end</a>
+		<a href="">Startup</a>
+	</div>
+</div>
+<div sidebox></div>
+<sidebox></sidebox>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.directive('sidebox', function() {
+	return {
+		restrict: 'EA',
+		scope: {
+			title: '@'
+		},
+		transclude: true,
+		template: 
+		'<div class="sidebox">\
+			<div class="content">\
+				<h2 class="header">{{ title }}</h2>\
+				<span class="content" ng-transclude></span>\
+			</div>\
+		</div>'
+	};
+});
+</script>   
+</body>  
+</html>  

@@ -1,0 +1,344 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>angular练习</title>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<!-- <script src="http://cdn.bootcss.com/angular.js/1.4.0-beta.6/angular-sanitize.min.js"></script> -->
+<script src="http://cdn.bootcss.com/angular.js/1.2.9/angular-route.min.js"></script>
+</head>
+<style>
+/**{margin:0;padding:0;list-style:none;}
+ul, ol, li {
+	list-style:none;
+}*/
+body{min-height:2000px;color:#333;}
+
+</style>
+
+
+
+
+<body>
+<div ng-app="myApp">
+	
+	
+	
+	<!--
+	<p>姓名：<input type="text" ng-model="name"></p>
+	<div>{{name}}</div>
+	
+	<div data-ng-init="sex='男'">{{sex}}</div>
+	
+	<div data-ng-init="q='5';c='3';a='3'">{{q+a}}</div>
+	
+	
+	<div ng-controller="firstController">
+		<p>姓名：<input type="text" ng-model="firstName"></p>
+		{{firstName}}
+		{{lastName}}
+	</div>
+	<div ng-controller="secondController">
+		<ul>
+			<li ng-repeat="p in person">姓名：{{p.name}};年龄：{{p.age}}</li>
+			
+		</ul>
+	</div>
+	<div ng-controller="personController">
+		名：<input type="text" ng-model="person.firstName"><br>
+		姓：<input type="text" ng-model="person.lastName"><br>
+		姓名：{{person.firstName +" "+person.lastName}}
+	</div>
+	
+	<div ng-controller="personController">
+		<ul>
+			<li ng-repeat="p in portalcate">
+				<p>{{p.aid}}</p>
+				<p>{{p.title}}</p>
+				<img ng-src="http://www.phonegap100.com/data/attachment/{{p.pic}}" width="300" height="200">
+			</li>
+			
+		</ul>
+	</div>
+	
+	<div ng-controller="numController">
+		<p>单价：<input type="text" ng-model="iphone.money"></p>
+		<p>个数：<input type="text" ng-model="iphone.num"></p>
+		<p>费用：<span>{{sum() | currency:'￥'}}</span></p>
+		<p>运费：<span>{{iphone.fre | currency:'￥'}}</span></p>
+		<p>总额：<span>{{sum()+iphone.fre | currency:'￥'}}</span></p>
+	</div>
+	<div ng-controller="h2Controller">
+		<div ng-bind-html='h2'></div>
+	</div>
+	<div ng-controller="bindController">
+		{{name}}
+		<div ng-bind-html="detailContent()"></div>
+	</div>
+	<div ng-controller="providerController">
+		{{name}}
+	</div>
+	<div id="parent" ng-controller="scollController">
+		<ul>
+			<li ng-repeat="id in [1,2,3,4,5]" ng-click="changeDiv('div'+id)">{{id}}aaaaaaaaaaaaa</li>
+		</ul>
+		<div ng-repeat="id in [1,2,3,4,5]" ng-attr-id="div{{id}}">{{id}}</div>
+	</div>
+	<div ng-controller="Aaa">
+		
+	</div>
+	<div ng-controller="Bbb">
+		
+	</div>
+	<div class="header">
+	    <a href="#div1">div1</a>
+		<a href="#div2">div2</a>
+		<a href="#div3">div3</a>
+		<a href="#content/12/5">content</a>
+	</div>
+	<div ng-view></div>
+	-->
+	
+	<div ng-controller="personController">
+		<ul>
+			<li></li>
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+/**
+*
+*
+
+var app = angular.module("myApp",[]);
+
+
+app.controller('firstController',['$scope','$rootScope',function($scope,$rootScope){
+	$scope.firstName= "张三";	
+	$scope.lastName= "李四";	
+}]);
+
+app.controller('secondController',function($scope){
+	setTimeout(function(){
+		$scope.$apply(function(){
+			$scope.person = '1111111';	
+		});	
+	},2000);
+	$scope.person=[
+		{name:'张三',age:'25'},
+		{name:'李四',age:'30'},
+		{name:'王五',age:'36'}
+	];
+});
+
+http://www.runoob.com/try/angularjs/data/Customers_JSON.php
+http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1&callback=JSON_CALLBACK
+
+
+app.controller('personController',function($scope,$http){
+	$http.get('php/data.php','config').success(function(data,status,headers,config){
+		console.log(data)
+		
+	}).error(function(err,status,headers,config){
+			
+	});
+	
+	var postData={text:"这是post的内容"};
+	var config={params:{id:'5',name:'张三'}};
+	$http.post('php/data1.php',postData,config).success(function(data){
+		$scope.names = data;	
+		console.log(data)
+	}).error(function(data){
+			
+	});
+	
+	$scope.firstName="John";
+	$scope.lastName="Doe";
+	
+	myUrl="http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1&callback=JSON_CALLBACK";
+	$http.jsonp(myUrl).success(function(data){
+		$scope.portalcate = data.result;
+		console.log(data.result)	
+	}).error(function(){
+		console.log('shibai')	
+	});
+	
+	
+	
+	app.controller('numController',['$scope',function($s){
+		$s.iphone={
+			money : 5,
+			num : 1,
+			fre : 10	
+		};
+		$s.sum=function(){
+			return $s.iphone.money*$s.iphone.num;
+		};
+		$s.$watch($s.sum,function(newValue,oldValue){
+			console.log(newValue)
+			console.log(oldValue)
+			$s.iphone.fre=newValue>=100 ? 0 :10;
+		});
+	}]);
+	
+	
+})
+app.controller('h2Controller',['$scope',function($sc){
+	$sc.h2= "<h2>这是一个h2</h2>";	
+}]);
+
+app.controller('bindController',function($scope,$timeout,$sce,$http){
+	$scope.name="hello";
+	$scope.text="<h1>hello</h1>";
+	var myUrl="http://www.phonegap100.com/appapi.php?a=getPortalArticle&aid=338&callback=JSON_CALLBACK";
+	$http.jsonp(myUrl).success(function(data){
+		// $scope.portalDetail=data.result[0];
+		$scope.detailContent=function(){
+			return $sce.trustAsHtml(data.result[0].content);
+		};
+	}).error(function(){
+		console.log("失败")
+	});
+});
+// var m1 = angular.module('myApp',[],function($provide){
+// 	$provide.provider('providerServices01',function(){
+// 		this.$get=function(){
+// 			return{
+// 				message:'this is providerServices01'
+// 			}
+// 		}
+// 	});
+// });
+
+var m1 = angular.module('myApp',[]);
+m1.config(function($provide){
+	$provide.provider('providerServices01',function(){
+		this.$get=function(){
+			return{
+				message:'this is providerServices01'
+			}
+		}
+	});
+	$provide.provider('providerServices02',function(){
+		this.$get=function(){
+			var _name='';
+			var service={};
+			service.setName=function(name){
+				_name=name;
+			}
+			service.getName=function(){
+				return _name;
+			}
+			return service;
+		}
+	});
+});
+
+m1.controller('providerController',['$scope','providerServices01','providerServices02',function($scope,providerServices01,providerServices02){
+	console.log(providerServices01);
+	console.log(providerServices02);
+	providerServices02.setName='李四';
+	$scope.name=providerServices02.getName();
+}]);
+
+m1.controller('scollController',['$scope','$location','$anchorScroll',function($scope,$location,$anchorScroll){
+	$scope.changeDiv=function(div){
+		$location.hash(div)
+	}
+}]);
+
+m1.controller('Aaa',['$scope','$cacheFactory',function($scope,$cacheFactory){
+	var cache = $cacheFactory('cacheId');
+	//console.log(cache)
+	cache.put('name','张三');
+	cache.put('age','30');
+	var name = cache.get('name');
+	console.log(name)
+}]);
+m1.controller('Bbb',['$scope','$cacheFactory',function($scope,$cacheFactory){
+	var cache = $cacheFactory.get('cacheId');
+	//console.log(cache)
+	cache.put('name','张三');
+	var name = cache.get('name');
+	var age = cache.get('age');
+	console.log(name)
+	console.log(age)
+}]);
+app.run(['$rootScope'],function($rootScope){
+	$rootScope.$on('$routeChangeStart',function(event,current,pre){
+		console.log(event);
+		console.log(current);
+		console.log(pre);
+	});	
+});
+app.config(['$routeProvider',function($routeProvider){
+	$routeProvider
+		.when('/div1',{
+			templateUrl:'template1.html',
+			controller:'div1Controller'	
+		})
+		.when('/div2',{
+			template:'<p>这是div2{{text}}</p>',
+			controller:'div2Controller'	
+		})
+		.when('/div3',{
+			template:'<p>这是div3{{text}}</p>',
+			controller:'div3Controller'	
+		})
+		.when('/content/:id/:cateid',{
+			template:'<p>这是content{{id}}/{{cateid}}</p>',
+			controller:'div4Controller'	
+		})
+		.otherwise({
+			redirectTo:'div1'	
+		});
+}]);
+app.controller('div1Controller',function($scope){
+	$scope.text='div1Controller';	
+});
+app.controller('div2Controller',function($scope){
+	$scope.text='div2Controller';	
+});
+app.controller('div3Controller',function($scope){
+	$scope.text='div3Controller';	
+});
+app.controller('div4Controller',function($scope,$routeParams){
+	console.log($routeParams)
+	$scope.id=$routeParams.id;
+	$scope.cateid=$routeParams.cateid;
+	$scope.text='div4Controller';
+	
+});
+
+*
+*/
+var app = angular.module('myApp',['ngRoute']);
+
+
+var iframe = document.getElementById("iframe");
+
+app.controller('personController',function($scope,$http){
+	$http.get('http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1&callback=JSON_CALLBACK').success(function(data,status,headers,config){
+		$scope.data=decodeURIComponent(data);
+		
+		$scope.template+="<li ng-repeat='p in $scope.data'>"+
+				"<p>{{p.aid}}</p>"+
+				"<p>{{p.title}}</p>"+
+				"<img ng-src='http://www.phonegap100.com/data/attachment/{{p.pic}}' width='300' height='200'>"+
+			"</li>"
+		console.log($scope.data)
+		console.log(status)
+		
+	}).error(function(err,status,headers,config){
+		console.log(err)
+		console.log(status)	
+	});
+})
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title> ng-include</title>  
+    <meta name="discription" content="使用 ng-include 时AngularJS会自动创建一个子作用域。如果你想使用某个特定的作用域，例如 ControllerA的作用域，必须在同一个DOM元素上添加 ng-controller ='ControllerA'
+指令，这样当模板加载完成后，不会像往常一样从外部作用域继承并创建一个新的子作用域">
+</head>  
+<body>  
+
+<br/>
+<div ng-include="tmp1.html"
+ng-controller="MyController"
+ng-init="name = 'World'">
+Hello {{ name }}
+</div>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

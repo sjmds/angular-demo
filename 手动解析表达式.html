@@ -1,0 +1,33 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>手动解析表达式</title>  
+       
+    </head>  
+    <body>  
+    <div ng-controller="MyController">
+        <input ng-model="expr" type="text" placeholder="Enter an expression" />
+        <h2>{{ parsedValue }}</h2>
+    </div>
+
+    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+    <script src="js/angular.min.js"></script>  
+    <script type="text/javascript">  
+    
+
+   
+    angular.module("myApp", [])
+    .controller('MyController',function($scope,$parse) {
+         $scope.$watch('expr', function(newVal, oldVal, scope) {
+            if (newVal !== oldVal) {
+                // 用该表达式设置parseFun
+                var parseFun = $parse(newVal);
+                // 获取经过解析后表达式的值
+                $scope.parsedValue = parseFun(scope);
+            }
+        });
+    });
+    </script>   
+    </body>  
+</html>  

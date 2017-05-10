@@ -1,0 +1,54 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>compile 选项可以返回一个对象或函数。 </title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+
+</style>
+<body>  
+<p>生命周期</p>
+<p>第一个阶段是编译阶段。在编译阶段，AngularJS会遍历整个HTML文档并根据JavaScript中
+的指令定义来处理页面上声明的指令。</p>
+<p>与克隆 li 元素，再将其与数据进行链接，然后对每个元素都循环进行此操作的过程不同，
+我们仅需要先将无需列表构造出来，然后将新的DOM（编译后的DOM）传递给指令生命周期中
+的下一个阶段，即链接阶段。</p>
+<br/>
+<p>compile 选项本身并不会被频繁使用，但是 link 函数则会被经常使用。本质上，当我们设置
+了 link 选项，实际上是创建了一个 postLink() 链接函数，以便 compile() 函数可以定义链接函数。</p>
+<br/>
+<p>通常情况下，如果设置了 compile 函数，说明我们希望在指令和实时数据被放到DOM中之前
+进行DOM操作，在这个函数中进行诸如添加和删除节点等DOM操作是安全的。</p>
+<p>compile 和 link 选项是互斥的。如果同时设置了这两个选项，那么会把 compile
+所返回的函数当作链接函数，而 link 选项本身则会被忽略。</p>
+<pre>
+// ...
+compile: function(tEle, tAttrs, transcludeFn) {
+	var tplEl = angular.element('<\div>' +
+	'\<\h2></\h2>' +
+	'\</\div>');
+	var h2 = tplEl.find('h2');
+	h2.attr('type', tAttrs.type);
+	h2.attr('ng-model', tAttrs.ngModel);
+	h2.val("hello");
+	tEle.replaceWith(tplEl);
+	return function(scope, ele, attrs) {
+		// 连接函数
+	};
+}
+//...
+</pre>
+<p>编译函数负责对模板DOM进行转换。</p>
+<p>链接函数负责将作用域和DOM进行链接。在作用域同DOM链接之前可以手动操作DOM。在
+实践中，编写自定义指令时这种操作是非常罕见的，但有几个内置指令提供了这样的功能。了解
+这个流程对于理解AngularJS真正的工作方式很有帮助。</p>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

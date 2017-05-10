@@ -1,0 +1,64 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>自定义验证</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>我们需要验证 username 在数据库中是否合法，可以实现一个指令，用来在
+表单发生变化时发送Ajax请求：</p>
+<pre>
+angular.module('validationExample', [])
+.directive('ensureUnique',function($http) {
+	return {
+		require: 'ngModel',
+		link: function(scope, ele, attrs, c) {
+			scope.$watch(attrs.ngModel, function() {
+				$http({
+					method: 'POST',
+					url: '/api/check/' + attrs.ensureUnique,
+					data: {field: attrs.ensureUnique, valud:scope.ngModel
+				}).success(function(data,status,headers,cfg) {
+					c.$setValidity('unique', data.isUnique);
+				}).error(function(data,status,headers,cfg) {
+					c.$setValidity('unique', false);
+				});
+			});
+		}
+	};
+});
+</pre>
+<p>出于演示目的，尽管我们在指令内置入了一个 $http 调用，但是在产品中的指令
+内使用 $http 是不明智的。相反，将它置入到服务中会更好。</p>
+<input type="text" placeholder="Desired username" name="username" ng-model="signup.username" ng-minlength="3" ng-maxlength="20" ensure-unique="username" required />
+<p>在这个自定义验证中，每当 ngModel 中对应的字段发生变化就会向服务器发送请求，以检查
+用户名是否是唯一的。</p>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('validationExample', [])
+.directive('ensureUnique',function($http) {
+	return {
+		require: 'ngModel',
+		link: function(scope, ele, attrs, c) {
+			scope.$watch(attrs.ngModel, function() {
+				$http({
+					method: 'POST',
+					url: '/api/check/' + attrs.ensureUnique,
+					data: {field: attrs.ensureUnique, valud:scope.ngModel
+				}).success(function(data,status,headers,cfg) {
+					c.$setValidity('unique', data.isUnique);
+				}).error(function(data,status,headers,cfg) {
+					c.$setValidity('unique', false);
+				});
+			});
+		}
+	};
+});
+</script>   
+</body>  
+</html>  

@@ -1,0 +1,51 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>controllerAs </title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+
+</style>
+<body>  
+<p>controllerAs 参数用来设置控制器的别名，可以以此为名来发布控制器，并且作用域可以访
+问 controllerAs 。这样就可以在视图中引用控制器，甚至无需注入 $scope 。</p>
+
+
+
+<div ng-controller="MainControllerasmain">
+	<input type="text" ng-model="main.name" /><br/>
+	<span>{{ main.name }}</span>
+</div>
+<pre>
+angular.module('myApp')
+.controller('MainController', function() {
+	this.name = "Ari";
+});
+</pre>
+<p>这个参数看起来好像没什么大用，但它给了我们可以在路由和指令中创建匿名控制器的强大
+能力。这种能力可以将动态的对象创建成为控制器，并且这个对象是隔离的、易于测试的。</p>
+
+<div my-directive>{{myController.msg}}</div>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp')
+.controller('MainController', function() {
+	this.name = "Ari";
+})
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		template: '<h4>{{ myController.msg }}</h4>',
+		controllerAs: 'myController',
+		controller: function() {
+			this.msg = "Hello World"
+		}
+	};
+});
+</script>   
+</body>  
+</html>  

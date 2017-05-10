@@ -1,0 +1,40 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ng-attr-(suffix)</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>当AngularJS编译DOM时会查找花括号 {{ some expression }} 内的表达式。这些表达式会
+被自动注册到 $watch 服务中并更新到 $digest 循环中，成为它的一部分：</p>
+<p> updated when`someExpression` on the$scope
+is updated </p>
+<h1>Hello{{someExpression}}</h1>
+<br/>
+<p>有时浏览器会对属性会进行很苛刻的限制。SVG就是一个例子：</p>
+<svg>
+	<circle cx="{{ cx }}"></circle>
+</svg>
+<p>运行上面的代码会抛出一个错误，指出我们有一个非法属性。可以用 ng-attr-cx 来解决这
+个问题。注意， cx 位于这个名称的尾部。在这个属性中，通过用 {{ }} 来写表达式，达到前面提
+到的目的。</p>
+<svg>
+	<circle ng-attr-cx="{{ cx }}"><circle>
+</svg>
+
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

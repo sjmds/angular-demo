@@ -1,0 +1,31 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>指令：自定义 HTML 元素和属性</title>  
+
+</head>  
+<body>  
+<video my-href="/goofy-video.mp">
+Can still take children nodes
+</video>
+<my-better-video my-href="/goofy-video.mp4">Caneventaketext</my-better-video>
+<br/>
+<my-directive></my-directive>
+<div my-directive></div>
+    
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp',[])
+.directive('myDirective', function() {
+    return {
+        restrict: 'A',
+        replace: true,// replace 方法会用自定义元素取代指令声明，而不是嵌套在其内部,true为取代，false不取代
+        template: '<a href="http://google.com">Click me to go to Google</a>'
+    };
+});
+
+</script>   
+</body>  
+</html>  

@@ -1,0 +1,35 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title> ng-model</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>ng-model 指令用来将 input 、 select 、 text area 或自定义表单控件同包含它们的作用域中
+的属性进行绑定。它可以提供并处理表单验证功能，在元素上设置相关的CSS类（ ng-valid 、
+ng-invalid 等），并负责在父表单中注册控件。
+它将当前作用域中运算表达式的值同给定的元素进行绑定。如果属性并不存在，它会隐式创
+建并将其添加到当前作用域中。
+我们应该始终用 ngModel 来绑定 $scope 上一个数据模型内的属性，而不是 $scope 上的属性，
+这可以避免在作用域或后代作用域中发生属性覆盖。
+</p>
+<br/>
+<input type="text" ng-model="modelName.someProperty" />
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.run(function($scope){
+	$scope.modelName={
+		someProperty:'someproperty'
+	}
+})
+</script>   
+</body>  
+</html>  

@@ -1,0 +1,79 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>controller </title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>controller 参数可以是一个字符串或一个函数。当设置为字符串时，会以字符串的值为名字，
+来查找注册在应用中的控制器的构造函数：</p>
+<pre>
+1.  $scope
+与指令元素相关联的当前作用域。
+2.  $element
+当前指令对应的元素。
+3.  $attrs
+由当前元素的属性组成的对象。例如，下面的元素：
+<div id="aDiv"class="box"></div>
+具有如下的属性对象：
+{
+	id: "aDiv",
+	class: "box"
+}
+4.  $transclude
+嵌入链接函数会与对应的嵌入作用域进行预绑定。
+transclude 链接函数是实际被执行用来克隆元素和操作DOM的函数。
+</pre>
+<p>例如，我们想要通过指令来添加一个超链接标签。可以在控制器内的 $transclude 函数中实
+现，如下所示：</p>
+<pre>
+angular.module('myApp')
+.directive('link', function() {
+	return {
+		restrict: 'EA',
+		transclude: true,
+		controller:
+		function($scope, $element, $transclude, $log) {
+			$transclude(function(clone) {
+				var a = angular.element('<a>');
+				a.attr('href', clone.text());
+				a.text(clone.text());
+				$log.info("Created new a tag in link directive");
+				$element.append(a);
+			});
+		}
+	};
+});
+</pre>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp')
+.directive('link', function() {
+	return {
+		restrict: 'EA',
+		transclude: true,
+		controller:
+		function($scope, $element, $transclude, $log) {
+			$transclude(function(clone) {
+				var a = angular.element('<a>');
+				a.attr('href', clone.text());
+				a.text(clone.text());
+				$log.info("Created new a tag in link directive");
+				$element.append(a);
+			});
+		}
+	};
+});
+</script>   
+</body>  
+</html>  

@@ -1,0 +1,51 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title> ng-select</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>ng-select 用来将数据同HTML的 select 元素进行绑定。这个指令可以和 ng-model 以及
+ng-options 指令一同使用，构建精细且表现优良的动态表单。
+<br/>
+ng-options 的值可以是一个内涵表达式（comprehension expression），其实这只是一种有趣
+的说法，简单来说就是它可以接受一个数组或对象，并对它们进行循环，将内部的内容提供给
+select 标签内部的选项。它可以是下面两种形式。</p>
+<p>  数组作为数据源：<br/>
+  用数组中的值做标签；<br/>
+  用数组中的值作为选中的标签；<br/>
+  用数组中的值做标签组；<br/>
+  用数组中的值作为选中的标签组。<br/>
+  对象作为数据源：<br/>
+  用对象的键值（key-value）做标签；<br/>
+  用对象的键值作为选中的标签；<br/>
+  用对象的键值作为标签组；<br/>
+  用对象的键值作为选中的标签组。</p>
+<br/>
+<div ng-controller="CityController">
+	<select ng-model="city" ng-options="city.name for city in cities">
+		<option value="">Choose City</option>
+	</select>
+	Best City: {{ city.name }}
+</div>
+
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp',[])
+.controller('CityController',function($scope) {
+	$scope.cities = [
+		{name: 'Seattle'},
+		{name: 'San Francisco'},
+		{name: 'Chicago'},
+		{name: 'New York'},
+		{name: 'Boston'}
+	];
+});
+</script>   
+</body>  
+</html>  

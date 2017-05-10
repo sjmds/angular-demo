@@ -1,0 +1,46 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>parser</title>  
+        <style type="text/css">  
+            *{  
+                margin: 0;  
+                padding: 0;  
+            }  
+            
+        </style>  
+    </head>  
+    <body>  
+    <div ng-controller="MyController">
+        
+    </div>
+    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+    <script src="js/angular.min.js"></script>  
+    <script type="text/javascript">  
+    //在 $parsers 数组中入栈一个新的函数，这个函数会在验证链中被调用
+    //每个 $parser 返回的值都会被传入下一个 $parser 中。当不希望数据模型发生更新时返回
+    //undefined 
+    angular.module('myApp')
+    .directive('oneToTen', function() {
+        return {
+            require: '?ngModel',
+            link: function(scope, ele, attrs, ngModel) {
+                if (!ngModel) return;
+                ngModel.$parsers.unshift(function(viewValue) {
+                    var i = parseInt(viewValue);
+                    if (i >= 0 && i < 10) {
+                        ngModel.$setValidity('oneToTen', true);
+                        return viewValue;
+                    } else {
+                        ngModel.$setValidity('oneToTen', false);
+                        return undefined;
+                    }
+
+                });
+            }
+        };
+    });
+    </script>   
+    </body>  
+</html>  

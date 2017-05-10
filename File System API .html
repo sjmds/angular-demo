@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>File System API </title>
+<style>
+*{list-style:none;}
+
+</style>
+<!--<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>-->
+<script>
+
+window.requestFileSystem=window.requestFileSystem||window.webkitRequestFileSystem;
+//请求临时文件的存储空间
+if(window.requestFileSystem){
+	window.requestFileSystem(window.TEMPORARY,5*1024*1024,initFS,errorHandler);
+}else{
+	alert("Sorry! Your brower doesn\'t support the FileSystem API");	
+};
+//请求成功回调
+function initFS(fs){
+	//在根目录下打开log.txt文件，如果不存在就创建
+	//fs就是返回成功的文件系统对象，fs.root代表根目录
+	fs.root.getFile('log.txt',{creat:true},function(fileEntry){
+		//fileEntry是返回的一个文件对象，代表打开的文件
+		//向文件写入指定内容
+		writeFile(fileEntry);
+		//讲写入的内容又读出来，显示在页面上
+		readFile(fileEntry);
+	},errorHandler);	
+};
+//读取文件内容
+function readFile(fileEntry){
+	console.log('readFile');
+	//Get a File object representing the file,
+	//the use FileReader to read its contents.
+	fileEntry.file(function(file){
+		console.log('createReader');	
+		var reader = new FileReader();
+		reader.onloadend=function(e){
+			console.log('onloadend');
+			var txtArea = document.createElement('textarea');
+			txtArea.value = this.result;
+			document.body.appendChild(txtArea);	
+		};
+		reader.readAsText(file);
+	},errorhandler);	
+};
+//向文件写入指定内容
+function writeFile(fileEntry){
+	console.log('writeFile');
+	fileEntry.createWriter(function(fileWriter){
+		console.log('createWriter');
+		fileWriter.onwriteend=function(e){
+			console.log('Write completed');
+		};	
+		fileWriter.onerror=function(e){
+			console.log('Write failed:'+e.toString());	
+		};
+		//Create a new Blob and write it to log.txt
+		var blob = new Blob(['helle world!'],{type:'text/plain'});
+		fileWriter.write(blob);
+	},errorhandler);	
+};
+function errorHandler(err){
+	var msg = 'An error occured:'+err;
+	console.log(msg);	
+};
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

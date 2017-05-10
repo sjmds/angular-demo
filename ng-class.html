@@ -1,0 +1,37 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ng-class</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>使用 ng-class 动态设置元素的类，方法是绑定一个代表所有需要添加的类的表达式。重复
+的类不会添加。当表达式发生变化，先前添加的类会被移除，新类会被添加</p>
+<br/>
+<div ng-controller="LotteryController">
+	<div ng-class="{red: x > 5,green: x > 6}" ng-if="x > 5">	You won!</div>	
+	<button ng-click="x = generateNumber()" ng-init="x = 0">Draw Number</button>
+	<p>Number is: {{ x }}</p>
+</div>
+
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp',[])
+.controller('LotteryController', function($scope) {
+	$scope.generateNumber = function() {
+		return Math.floor((Math.random()*10)+1);
+	};
+});
+</script>   
+</body>  
+</html>  

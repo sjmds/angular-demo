@@ -1,0 +1,64 @@
+<!DOCTYPE html>  
+<html lang="en" ng-app="myApp">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Document</title>  
+      
+</head>  
+<body ng-controller="app">  
+    <table>  
+        <tr>  
+            <td ng-click="sort('name')">姓名</td>  
+            <td ng-click="sort('age')">年龄</td>  
+        </tr>  
+        <tr ng-repeat="arr1 in arr1">  
+            <td>{{arr1.name}}</td>  
+            <td>{{arr1.age}}</td>  
+        </tr>  
+    </table>  
+      
+    <input id="wei" type="text" ng-focus="concentrate()" >      
+    <input  type="button" ng-click="search()" value="搜索">  
+</body>  
+<script src="js/angular.min.js"></script>  
+<script src="js/jquery.min.js"></script>  
+    <script>  
+        // var wei = document.getElementById("wei");  
+        // console.log(wei);  
+        // setTimeout(function(){  
+        //  $("#wei").attr("disabled",false);     
+        // },3000);  
+        var m=angular.module("myApp",[]);  
+        m.controller("app",["$scope","$filter",function($scope,$filter){  
+            var arr=[  
+                {"name":"猪","age":20},  
+                {"name":"小猪","age":23},  
+                {"name":"大猫","age":227},  
+                {"name":"老虎","age":29},  
+                {"name":"中虎","age":29},  
+                {"name":"老虎","age":39},  
+                {"name":"老猫","age":47},  
+                {"name":"熊猫","age":29},  
+                {"name":"树懒","age":27},  
+                {"name":"狮子","age":59}  
+            ];  
+             $scope.arr1=arr;  
+             //实现查询功能  
+            var isopen=true;  
+            $scope.sort=function(str){  
+                $scope.arr1=$filter("orderBy")($scope.arr1,str,isopen);  
+                isopen=!isopen;  
+                //console.log(isopen);  
+            };  
+            $scope.concentrate=function(){  
+                console.log("已聚焦");  
+            }  
+            //实现查询功能  
+            $scope.search=function(){  
+                console.log(11);  
+                $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);  
+            }  
+              
+        }]);  
+    </script>  
+</html>  

@@ -1,0 +1,75 @@
+<!DOCTYPE html>  
+<html ng-app="myApp">  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>drag</title>  
+        <style>  
+        *{  
+            padding:0;  
+            margin:0;  
+        }  
+            .wei{  
+                width:100px;  
+                height:100px;  
+                background: red;  
+                position:absolute;  
+                cursor: pointer;  
+                /*left:0;top:0;*/  
+            }  
+        </style>  
+    </head>  
+    <body ng-controller="show">  
+            <div class="wei" wei-yi data="true"></div>  
+            <div class="wei" wei-yi data="false"></div>  
+        <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+        <script src="js/angular.min.js" type="text/javascript" charset="utf-8"></script>  
+        <script type="text/javascript">  
+            var app = angular.module('myApp',[]);  
+            //自定义属性  
+            app.directive("weiYi",function(){  
+                return{  
+                    restrict :'A',//A属性,E标签,C类名,D注释   
+                    link :function(scope,element,attr){  
+                        
+                        attr.data=angular.equals(attr.data,"true");  
+                        //console.log(attr.data);  
+                        //console.log(element);  
+                        element.on("mousedown",function(e){  
+                            var that = $(this);  
+                            console.log(attr.data);  
+                            if(attr.data){  
+                                $div=$("<div>");  
+                                console.log($div);  
+                                $div.css({"width":"100px","height":"100px","border": "2px dotted green","position":"absolute","left":that.offset().left,"top":that.offset().top});  
+                                $div.appendTo($("body"));  
+                            }  
+                            var x=e.clientX-$(this).offset().left;  
+                            var y=e.clientY-$(this).offset().top;  
+                            //console.log(x+":"+y);  
+                            $(document).on("mousemove",function(e){  
+                                if(attr.data){  
+                                    $div.css({"left":e.clientX-x,"top":e.clientY-y});  
+                                }else{  
+                                    that.css({"left":e.clientX-x,"top":e.clientY-y});  
+                                }  
+                            });  
+                            $(document).on("mouseup",function(e){  
+                                //console.log($div);  
+                                $(document).off();  
+                                if(attr.data){  
+                                    that.css({"left":$div.offset().left,"top":$div.offset().top});  
+                                    $div.remove();  
+                                }  
+                            })  
+  
+                        })  
+                    }  
+                }  
+            });  
+            app.controller('show',['$scope',function(scope$){  
+  
+                  
+            }]);  
+        </script>   
+    </body>  
+</html> 

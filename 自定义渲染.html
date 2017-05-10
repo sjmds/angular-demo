@@ -1,0 +1,48 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>自定义渲染</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<p>在控制器中定义 $render 方法可以定义视图具体的渲染方式。这个方法会在 $parser 流水线
+完成后被调用。<br/>
+由于这个方法会破坏AngularJS的标准工作方式，因此一定要谨慎使用：</p>
+<br/>
+<pre>
+angular.module('myApp')
+.directive('myDirective', function() {
+	return {
+		require: '?ngModel',
+		link: function(scope, ele, attrs, ngModel) {
+			if (!ngModel) return;
+			ngModel.$render = function() {
+				element.html(ngModel.$viewValue() || 'None');
+			};
+		}
+	};
+});
+</pre>
+
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp')
+.directive('myDirective', function() {
+	return {
+		require: '?ngModel',
+		link: function(scope, ele, attrs, ngModel) {
+			if (!ngModel) return;
+			ngModel.$render = function() {
+				element.html(ngModel.$viewValue() || 'None');
+			};
+		}
+	};
+});
+</script>   
+</body>  
+</html>  

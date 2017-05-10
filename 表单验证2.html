@@ -1,0 +1,67 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>表单验证--ngMessages</title>  
+<style type="text/css">  
+*{  
+    margin: 0;  
+    padding: 0;  
+}  
+
+</style>  
+</head>  
+<body>  
+   
+<form name="signup_form" novalidate ng-submit="signupForm()" ng-controller="signupController">
+    <label>Your name</label>
+    <input type="text" placeholder="Name" name="name" ng-model="signup.name" ng-minlength=3 ng-maxlength=20 required />
+    <div class="error" ng-messages="signup_form.name.$error" ng-messages-multiple>
+        <div ng-message="required">Make sure you enter your name</div>
+        <div ng-message="minlength">Your name must be at least 3 characters</div>
+        <div ng-message="maxlength">Your name cannot be longer than 20 characters</div>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+    
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+var app=angular.module('myApp',['ngMessages'])
+app.controller('signupController', function($scope,ngMessages) {
+    $scope.submitted = false;
+    $scope.signupForm = function() {
+        if ($scope.signup_form.$valid) {
+            // 正常提交
+        } else {
+            $scope.signup_form.submitted = true;
+        }
+    }
+});
+app.directive('ngFocus', [function() {
+    var FOCUS_CLASS = "ng-focused";
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl) {
+            ctrl.$focused = false;
+            element
+            .bind('focus', function(evt) {
+                element.addClass(FOCUS_CLASS);
+                scope.$apply(function() {
+                    ctrl.$focused = true;
+                });
+            })
+            .bind('blur', function(evt) {
+                element.removeClass(FOCUS_CLASS);
+                scope.$apply(function() {
+                    ctrl.$focused = false;
+                });
+            });
+        }
+    };
+}]);
+</script>   
+</body>  
+</html>  

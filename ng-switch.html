@@ -1,0 +1,27 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ng-switch</title>  
+    <meta name="discription" content='这个指令和 ng-switch-when 及 on="propertyName" 一起使用，可以在 propertyName 发生变
+化时渲染不同指令到视图中。在下面的例子中，当 person.name 是Ari时，文本域下面的 div 会显
+示出来，并且这个人会获得胜利：'>
+</head>  
+<body>  
+
+<br/>
+<input type="text" ng-model="person.name"/><br/>
+<div ng-switch on="person.name">
+	<p ng-switch-default>And the winner is</p>
+	<h1 ng-switch-when="Ari">{{ person.name }}</h1>
+</div>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

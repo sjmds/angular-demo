@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>angular练习</title>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<!-- <script src="http://cdn.bootcss.com/angular.js/1.4.0-beta.6/angular-sanitize.min.js"></script> -->
+<script src="http://cdn.bootcss.com/angular.js/1.2.9/angular-route.min.js"></script>
+</head>
+<style>
+/**{margin:0;padding:0;list-style:none;}
+ul, ol, li {
+	list-style:none;
+}*/
+body{min-height:2000px;color:#333;}
+
+</style>
+
+
+
+
+<body>
+<div ng-app="myApp">
+	<div ng-controller="personController">
+		<ul>
+			<li ng-repeat="p in portalcate">
+				<p>{{p.aid}}</p>
+				<p>{{p.title}}</p>
+				<img ng-src="http://www.phonegap100.com/data/attachment/{{p.pic}}" width="300" height="200">
+			</li>
+			
+		</ul>
+	</div>
+	
+</div>
+
+<script type="text/javascript">
+
+var app = angular.module('myApp',['ngRoute']);
+
+
+var iframe = document.getElementById("iframe");
+
+app.controller('personController',function($scope,$http){
+	myUrl="http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1&callback=JSON_CALLBACK";
+	$http.jsonp(myUrl).success(function(data){
+		$scope.portalcate = data.result;
+		console.log(data.result)	
+	}).error(function(){
+		console.log('shibai')	
+	});
+})
+
+	
+</script>
+
+
+</body>
+</html>

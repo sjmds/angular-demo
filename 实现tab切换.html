@@ -1,0 +1,82 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>tab切换</title>  
+        <style type="text/css">  
+            *{  
+                margin: 0;  
+                padding: 0;  
+            }  
+            .box{  
+                width:300px;  
+                margin:20px auto;  
+                height:200px;  
+            }  
+            #tab1 .first{  
+                background: #f40;  
+                color:#fff;  
+            }  
+            a{  
+                display:inline-block;  
+                width:75px;  
+                height:25px;  
+                line-height: 25px;  
+                color:black;  
+                text-decoration: none;  
+                border:0px solid gray;  
+                text-align: center;  
+            }  
+            #tab1 div{  
+                width: 300px;  
+                height: 200px;  
+                border: 1px solid #ddd;  
+                display: none;  
+            }  
+            #tab1 img{  
+                width: 100px;  
+                height: 100px;  
+                margin:0 auto;  
+            }  
+        </style>  
+    </head>  
+    <body ng-controller="show">  
+    <div class="box">  
+        <gr-tab gr-id="tab1" gr-data="data1" ></gr-tab>  
+    </div>      
+    <!-- <gr-tab gr-id="tab1" gr-data="data1" ></gr-tab> -->  
+        <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+        <script src="js/angular.min.js"></script>  
+        <script type="text/javascript">  
+            var app = angular.module('myApp',[]);  
+            app.directive('grTab',function(){  //自定义指令  
+                return {  
+                    restrict : 'E', //定义标签属性  
+                    templateUrl : 'tabqh1.html', //外部引入html文件  
+                    replace : true, //把当前自定义的指令标签替换成引入的标签  
+                    scope : { //作用域隔离 ： 每个作用域执行的是自己的功能  
+                        grId : '@', //拿所有grId的字符串  
+                        grData : '=' //拿所有grData属性的变量名  
+                    },  
+                    link : function( scope , element , attr ){ //dom操作  
+                       
+                        element.delegate('a','click',function(){  
+                            $(this).addClass('first').siblings('a').removeClass('first');  
+                            $(this).siblings('div').eq($(this).index()).css('display','block').siblings('div').css('display','none')  
+                        });  
+                    }  
+                };  
+            })  
+            app.controller('show',['$scope',function($scope){  
+                $scope.data1 = [  
+                    {'val':'小花','title':'它是一个比较帅气的男孩儿',"img":"images/1.jpg"},  
+                    {'val':'小兰','title':'它有着一张跟年龄不服的脸庞',"img":"images/2.jpg"},  
+                    {'val':'小光','title':'它是一个比较任性的男孩儿',"img":"images/3.jpg"},  
+                    {'val':'小赫','title':'它是个逗比',"img":"images/4.jpg"}  
+                ]  
+                  
+            }]);  
+              
+        </script>   
+    </body>  
+</html>  

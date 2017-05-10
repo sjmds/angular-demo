@@ -1,0 +1,66 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>scope 参数 隔离作用域1</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>示例代码的效果与将 scope 设置为 true 几乎是相同的。下面看一下使用继承作用域的指令的
+例子，对比一下二者：</p>
+
+
+
+<div ng-init="myProperty='wow,this is cool'">
+Surrounding scope: {{ myProperty }}
+	<div my-inherit-scope-directive></div>
+	<div my-directive></div>
+</div>
+<pre>
+angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		template: 'Inside myDirective, isolate scope: {{ myProperty }}',
+		scope: {}
+	};
+})
+.directive('myInheritScopeDirective', function() {
+	return {
+		restrict: 'A',
+		template: 'Inside myDirective, isolate scope: {{ myProperty }}',
+		scope: true
+	};
+});	
+</pre>
+<p>理解了最重要的关于作用域的概念后，就可以将隔离作用域中的属性同外部世界进行绑定，
+使得隔离作用域可以和外部进行交互。</p>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		template: 'Inside myDirective, isolate scope: {{ myProperty }}',
+		scope: {}
+	};
+})
+.directive('myInheritScopeDirective', function() {
+	return {
+		restrict: 'A',
+		template: 'Inside myDirective, isolate scope: {{ myProperty }}',
+		scope: true
+	};
+});
+</script>   
+</body>  
+</html>  

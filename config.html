@@ -1,0 +1,77 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>config()</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+<pre>
+angular.module('myApp', [])
+	.config(function($provide) {
+});
+</pre>
+<pre>
+angular.module('myApp', [])
+.factory('myFactory', function(){
+	var service = {};
+	return service;
+})
+.directive('myDirective', function(){
+	return {
+	t	emplate: '<\button>Click me</\button>'
+	}
+})
+</pre>
+<p>AngularJS会在编译时执行这些辅助函数。它们在功能上等同于下面的写法：</p>
+<pre>
+angular.module('myApp', [])
+.config(function($provide ,$compileProvider) {
+	$provide.factory('myFactory', function() {
+		var service = {};
+		return service;
+	});
+	$compileProvider.directive('myDirective', function() {
+		return {
+			template: '<\button>Click me</\button>'
+		};
+	});
+});
+</pre>
+<p>需要特别注意，AngularJS会以这些函数书写和注册的顺序来执行它们。也就是说我们无法注入一个尚未注册的提供者。</p>
+<p>唯一例外的是 constant() 方法，这个方法总会在所有配置块之前被执行。</p>
+<p>也可以定义多个配置块，它们会按照顺序执行，这样就可以将应用不同阶段的配置代码集中
+在不同的代码块中。</p>
+<pre>
+angular.module('myApp', [])
+.config(function($routeProvider) {
+	$routeProvider.when('/', {
+		controller: 'WelcomeController',
+		template: 'views/welcome.html'
+	});
+})
+.config(function(ConnectionProvider) {
+	ConnectionProvider.setApiKey('SOME_API_KEY');
+});
+</pre>
+<p>config() 函数接受一个参数。<br/>
+  configFunction （函数）：AngularJS在模块加载时会执行这个函数。</p>
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.config(function($routeProvider) {
+	$routeProvider.when('/', {
+		controller: 'WelcomeController',
+		template: 'views/welcome.html'
+	});
+})
+.config(function(ConnectionProvider) {
+	ConnectionProvider.setApiKey('SOME_API_KEY');
+});
+</script>   
+</body>  
+</html>  

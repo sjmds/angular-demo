@@ -1,0 +1,34 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>ng-href</title>  
+<meta name="discription" content="如果使用 ng-href ，AngularJS会等到插值生效（在例子中是两秒以后）后再执行点击
+链接的行为：">
+</head>  
+<body>  
+<!-- 当 href 包含一个 {{expression}}时总是使用 ng-href -->
+<a ng-href="{{ myHref }}">I'm feeling lucky, when I load</a>
+<br/>
+<!-- 用户单击之前，href不会加载 -->
+<a href="{{ myHref }}">I'm feeling 404</a>
+
+
+
+
+
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.run(function($rootScope, $timeout) {
+	$timeout(function() {
+		$rootScope.myHref = 'http://google.com';
+	}, 2000);
+});
+</script>   
+</body>  
+</html>  

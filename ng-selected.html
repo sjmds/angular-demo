@@ -1,0 +1,30 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title> ng-selected</title>  
+    <meta name="discription" content="ng-selected 可以对是否出现 option 标签的 selected 属性进行绑定">
+</head>  
+<body>  
+<label>Select Two Fish:</label>
+<input type="checkbox" ng-model="isTwoFish"><br/>
+<select>
+	<option>One Fish</option>
+	<option ng-selected="isTwoFish">Two Fish</option>
+</select>
+
+
+
+
+
+
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+
+</script>   
+</body>  
+</html>  

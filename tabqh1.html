@@ -1,0 +1,7 @@
+<div id="{{grId}}">  
+    <a  href="javascript:;" ng-repeat="attr in grData" ng-class="{first:$first}">{{attr.val}}</a>  
+    <div ng-repeat="attr in grData" ng-style="{display:$first?'block':'none'}">  
+        <img ng-src="{{attr.img}}"/>   
+        <p>{{attr.title}}</p>  
+    </div>  
+</div>  

@@ -1,0 +1,89 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>用 link 函数创建可以操作DOM的指令 </title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+
+</style>
+<body>  
+<p>链接函数是可选的。如果定义了编译函数，它会返回链接函数，因此当两个函数都定义了时，
+编译函数会重载链接函数。如果我们的指令很简单，并且不需要额外的设置，可以从工厂函数（回
+调函数）返回一个函数来代替对象。如果这样做了，这个函数就是链接函数。</p>
+<p>下面两种定义指令的方式在功能上是完全一样的：</p>
+
+<pre>
+angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		pre: function(tElement, tAttrs, transclude) {
+		// 在子元素被链接之前执行
+		// 在这里进行Don转换不安全
+		// 之后调用'lihk'h函数将无法定位要链接的元素
+		},
+		post: function(scope, iElement, iAttrs, controller) {
+		// 在子元素被链接之后执行
+		// 如果在这里省略掉编译选项
+		//在这里执行DOM转换和链接函数一样安全吗
+		}
+	};
+});
+</pre>
+<pre>
+angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		link: function(scope, ele, attrs) {
+			return {
+				pre: function(tElement, tAttrs, transclude) {
+				// 在子元素被链接之前执行
+				// 在这里进行Don转换不安全
+				// 之后调用'lihk'h函数将无法定位要链接的元素
+			},
+			post: function(scope, iElement, iAttrs, controller) {
+				// 在子元素被链接之后执行
+				// 如果在这里省略掉编译选项
+				//在这里执行DOM转换和链接函数一样安全吗
+			}
+		}
+	}
+});
+</pre>
+<pre>
+link: function(scope, element, attrs) {
+// 在这里操作DOM
+}
+</pre>
+<p>如果指令定义中有 require 选项，函数签名中会有第四个参数，代表控制器或者所依赖的指
+令的控制器。</p>
+<pre>
+// require 'SomeController',
+link: function(scope, element, attrs, SomeController) {
+	// 在这里操作DOM，可以访问required指定的控制器
+}
+</pre>
+
+<div my-directive>{{myController.msg}}</div>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp')
+.controller('MainController', function() {
+	this.name = "Ari";
+})
+.directive('myDirective', function() {
+	return {
+		restrict: 'A',
+		template: '<h4>{{ myController.msg }}</h4>',
+		controllerAs: 'myController',
+		controller: function() {
+			this.msg = "Hello World"
+		}
+	};
+});
+</script>   
+</body>  
+</html>  

@@ -1,0 +1,38 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>控制器嵌套</title>  
+        <style type="text/css">  
+            *{  
+                margin: 0;  
+                padding: 0;  
+            }  
+            
+        </style>  
+    </head>  
+    <body>  
+    <div ng-controller="ParentController">
+        <div ng-controller="ChildController">
+            <button ng-click="sayHello()">Say hello</button>
+        </div>
+        {{ person }}
+    </div>
+
+    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+    <script src="js/angular.min.js"></script>  
+    <script type="text/javascript">  
+    var app = angular.module('myApp',[]);
+
+   
+    app.controller('ParentController', function($scope) {
+        $scope.person = {greeted: false};
+    });
+    app.controller('ChildController', function($scope) {
+        $scope.sayHello = function() {
+            $scope.person.name = 'Ari Lerner';
+        };
+    });
+    </script>   
+    </body>  
+</html>  

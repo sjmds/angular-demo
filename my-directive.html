@@ -1,0 +1,83 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>directive</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<p>指令的工厂函数只会在编译器第一次匹配到这个指令时调用一次。和 controller 函数类似，
+我们通过 $injetor.invoke 来调用指令的工厂函数。</p>
+<p>定义一个指令时可以使用的全部设置选项</p>
+<p>可能的选项如下所示，每个键的值说明了可以将这个属性设置为何种类型或者什么样的
+函数：</p>
+<pre>angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		restrict: String,
+		priority: Number,
+		terminal: Boolean,
+		template: String or Template Function:
+		function(tElement, tAttrs) {...},
+		templateUrl: String,
+		replace: Boolean or String,
+		scope: Boolean or Object,
+		transclude: Boolean,
+		controller: String or
+		function(scope, element, attrs, transclude, otherInjectables) { ... },
+		controllerAs: String,
+		require: String,
+		link: function(scope, iElement, iAttrs) { ... },
+		compile: // 返回一个对象或连接函数，如下所示：
+		function(tElement, tAttrs, transclude) {
+		return {
+			pre: function(scope, iElement, iAttrs, controller) { ... },
+			post: function(scope, iElement, iAttrs, controller) { ... }
+		}
+		// 或者
+		return function postLink(...) { ... }
+		}
+	};
+});</pre>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.directive('myDirective', function() {
+	return {
+		restrict: String,
+		priority: Number,
+		terminal: Boolean,
+		template: String or Template Function:
+		function(tElement, tAttrs) {...},
+		templateUrl: String,
+		replace: Boolean or String,
+		scope: Boolean or Object,
+		transclude: Boolean,
+		controller: String or
+		function(scope, element, attrs, transclude, otherInjectables) { ... },
+		controllerAs: String,
+		require: String,
+		link: function(scope, iElement, iAttrs) { ... },
+		compile: // 返回一个对象或连接函数，如下所示：
+		function(tElement, tAttrs, transclude) {
+		return {
+			pre: function(scope, iElement, iAttrs, controller) { ... },
+			post: function(scope, iElement, iAttrs, controller) { ... }
+		}
+		// 或者
+		return function postLink(...) { ... }
+		}
+	};
+});
+</script>   
+</body>  
+</html>  

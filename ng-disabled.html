@@ -1,0 +1,25 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>ng-disabled</title>  
+<meta name="discription" content="在下面的例子中按钮会一直禁用，
+直到用户在文本字段中输入内容">
+</head>  
+<body>  
+<input type="text" ng-model="someProperty" placeholder="TypetoEnable">
+<button ng-model="button" ng-disabled="!someProperty">AButton</button>
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+ .run(function($rootScope, $timeout) {
+    $rootScope.isDisabled = true;
+    $timeout(function() {
+        $rootScope.isDisabled = false;
+    }, 5000);
+});
+</script>   
+</body>  
+</html>  

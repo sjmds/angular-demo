@@ -1,0 +1,50 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+<meta charset="UTF-8">  
+<title>当前作用域</title>  
+
+</head>  
+<body>  
+<p>We can access: {{ rootProperty }}</p>
+<div ng-controller="ParentController">
+	<p>We can access: {{ rootProperty }} and {{ parentProperty }}</p>
+	<div ng-controller="ChildController">
+		<p>
+		We can access:
+		{{ rootProperty }} and
+		{{ parentProperty }} and
+		{{ childProperty }}
+		</p>
+		<p>{{ fullSentenceFromChild }}</p>
+	</div>
+</div>
+
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.run(function($rootScope) {
+	// 使用.run访问$rootScope
+	$rootScope.rootProperty = 'root scope';
+})
+.controller('ParentController', function($scope) {
+	// 使用.controller访问`ng-controller`内部的属性
+	// 在DOM忽略的$scope中，根据当前控制器进行推断
+	$scope.parentProperty = 'parent scope';
+})
+.controller('ChildController', function($scope) {
+	$scope.childProperty = 'child scope';
+	// 同在DOM中一样，我们可以通过当前$scope直接访问原型中的任意属性
+	$scope.fullSentenceFromChild = 'Same $scope: We can access: ' +
+	$scope.rootProperty + ' and ' +
+	$scope.parentProperty + ' and ' +
+	$scope.childProperty
+});
+
+</script>   
+</body>  
+</html>  

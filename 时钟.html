@@ -1,0 +1,37 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>时钟</title>  
+        <style type="text/css">  
+            *{  
+                margin: 0;  
+                padding: 0;  
+            }  
+            
+        </style>  
+    </head>  
+    <body>  
+    <div ng-controller="MyController">
+        <h1>Hello {{ clock }}!</h1>
+   
+    </div>  
+
+    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+    <script src="js/angular.min.js"></script>  
+    <script type="text/javascript">  
+    var app = angular.module('myApp',[]);
+
+   
+    app.controller("MyController",function($scope, $timeout){
+         var updateClock = function() {
+            $scope.clock = (new Date()).toLocaleString();
+            $timeout(function() {
+                updateClock();
+            }, 1000);
+        };
+        updateClock();
+    });
+    </script>   
+    </body>  
+</html>  

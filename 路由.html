@@ -1,0 +1,102 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>路由</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+.red {
+color: red;
+}
+.green{color:#0c0;}
+
+</style>
+<body>  
+<pre>
+angular.module('myApp', []).
+config(['$routeProvider', function($routeProvider) {
+	$routeProvider
+	.when('/', {
+		templateUrl: 'views/home.html',
+		controller: 'HomeController'
+	});
+}]);
+</pre>
+<p>第一个参数是路由路径，这个路径会与 $location.path 进行匹配， $location.path 也就是
+当前URL的路径。如果路径后面还有其他内容，或使用了双斜线也可以正常匹配。我们可以在
+URL中存储参数，参数需要以冒号开头（例如 :name ），后面会讨论如何用 $routeParams 读取这
+些参数。</p>
+<p>第二个参数是配置对象，决定了当第一个参数中的路由能够匹配时具体做些什么。配置对象
+中可以进行设置的属性包括 controller 、 template 、 templateURL 、 resolve 、 redirectTo 和
+reloadOnSearch 。</p>
+<p>一个复杂的路由方案会包含多个路由，以及一个可以将所有意外路径进行重定向的捕获器。</p>
+<pre>
+angular.module('myApp', [])
+.config(['$routeProvider', function($routeProvider) {
+	$routeProvider
+	.when('/', {
+		templateUrl: 'views/home.html',
+		controller: 'HomeController'
+	})
+	.when('/login', {
+		templateUrl: 'views/login.html',
+		controller: 'LoginController'
+	})
+	.when('/dashboard', {
+		templateUrl: 'views/dashboard.html',
+		controller: 'DashboardController',
+		resolve: {
+			user: function(SessionService) {
+				return SessionService.getCurrentUser();
+			}
+		}
+	})
+	.otherwise({
+		redirectTo: '/'
+	});
+}]);
+</pre>
+<pre>
+ resolve
+resolve: {
+	'data': ['$http', function($http) {
+		return $http.get('/api').then(
+			function success(res) { return response.data; },
+			function error(reason) { return false; }
+		);
+	}];
+}
+</pre>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script src="js/angular-ui-router.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp', [])
+.config(['$routeProvider', function($routeProvider) {
+	$routeProvider
+	.when('/', {
+		templateUrl: 'views/home.html',
+		controller: 'HomeController'
+	})
+	.when('/login', {
+		templateUrl: 'views/login.html',
+		controller: 'LoginController'
+	})
+	.when('/dashboard', {
+		templateUrl: 'views/dashboard.html',
+		controller: 'DashboardController',
+		resolve: {
+			user: function(SessionService) {
+				return SessionService.getCurrentUser();
+			}
+		}
+	})
+	.otherwise({
+		redirectTo: '/'
+	});
+}]);
+</script>   
+</body>  
+</html>  

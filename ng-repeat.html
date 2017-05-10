@@ -1,0 +1,47 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>ng-repeat</title>  
+    <meta name="discription" content='ng-repeat 用来遍历一个集合或为集合中的每个元素生成一个模板实例。集合中的每个元素
+都会被赋予自己的模板和作用域。同时每个模板实例的作用域中都会暴露一些特殊的属性。'>
+</head>  
+<style>
+.odd {color: blue;}
+.even {color: red;}
+.first{color:#0c0;}
+.last{color:#000;}
+</style>
+<body>  
+<p>  $index ：遍历的进度（0... length-1 ）。<br/>
+  $first ：当元素是遍历的第一个时值为 true 。<br/>
+  $middle ：当元素处于第一个和最后元素之间时值为 true 。<br/>
+  $last ：当元素是遍历的最后一个时值为 true 。<br/>
+  $even ：当 $index 值是偶数时值为 true 。<br/>
+  $odd ：当 $index 值是奇数时值为 true 。</p>
+<br/>
+<ul ng-controller="PeopleController">
+	<li ng-repeat="person in people" ng-class="{even: !$even, odd: !$odd,last:$last,first:$first}">
+		{{person.name}} lives in {{person.city}}
+	</li>
+</ul>
+
+
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp',[])
+.controller('PeopleController',function($scope) {
+	$scope.people = [
+		{name: "Ari", city: "San Francisco"},
+		{name: "Erik", city: "Seattle"},
+		{name: "Erik", city: "Seattle"},
+		{name: "Ari", city: "San Francisco"},
+		{name: "Erik", city: "Seattle"},
+		{name: "Ari", city: "San Francisco"},
+	];
+});
+</script>   
+</body>  
+</html>  

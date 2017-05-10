@@ -1,0 +1,61 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>$setViewValue() 方法适合于在自定义指令中监听自定义事件（比如使用具有回调函数的
+jQuery插件），我们会希望在回调时设置 $viewValue 并执行digest循环。</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+
+</style>
+<body>  
+<p>$setViewValue() 方法适合于在自定义指令中监听自定义事件（比如使用具有回调函数的
+jQuery插件），我们会希望在回调时设置 $viewValue 并执行digest循环。</p>
+<pre>
+angular.module('myApp')
+.directive('myDirective', function() {
+	return {
+		require: '?ngModel',
+		link: function(scope, ele, attrs, ngModel) {
+			if (!ngModel) return;
+			$(function() {
+				ele.datepicker({
+					onSelect: function(date) {
+						// 设置视图和调用apply
+						scope.$apply(function() {
+							ngModel.$setViewValue(date);
+						});
+					}
+				});
+			});
+		}
+	};
+});
+</pre>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp')
+.directive('myDirective', function() {
+	return {
+		require: '?ngModel',
+		link: function(scope, ele, attrs, ngModel) {
+			if (!ngModel) return;
+			$(function() {
+				ele.datepicker({
+					onSelect: function(date) {
+						// 设置视图和调用apply
+						scope.$apply(function() {
+							ngModel.$setViewValue(date);
+						});
+					}
+				});
+			});
+		}
+	};
+});
+</script>   
+</body>  
+</html>  

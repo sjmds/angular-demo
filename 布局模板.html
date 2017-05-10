@@ -1,0 +1,51 @@
+<!DOCTYPE html>  
+<html ng-app="myApp" >  
+<head>  
+    <meta charset="UTF-8">  
+    <title>布局模板</title>  
+    <meta name="discription" content=''>
+</head>  
+<style>
+
+</style>
+<body>  
+
+<p>要创建一个布局模板，需要修改HTML以告诉AngularJS把模板渲染到何处。通过将 ng-view
+指令和路由组合到一起，我们可以精确地指定当前路由所对应的模板在DOM中的渲染位置。</p>
+<br/>
+<header>
+	<h1>Header</h1>
+</header>
+<div class="content">content
+	<div ng-view></div>
+</div>
+<footer>
+	<h5>Footer</h5>
+</footer>
+<p>这个例子中，我们将所有需要渲染的内容都放到了 <\div class="content"> 中，而 <\header>
+和 <\footer> 中的内容在路由改变时不会有任何变化。</p>
+<p>ng-view 是一个优先级为1000的终极指令。AngularJS不会运行同一个元素上的
+低优先级指令</p>
+<pre>
+ngView 指令遵循以下规则。
+  每次触发 $routeChangeSuccess 事件，视图都会更新。
+  如果某个模板同当前的路由相关联：
+  创建一个新的作用域；
+  移除上一个视图，同时上一个作用域也会被清除；
+  将新的作用域同当前模板关联在一起；
+  如果路由中有相关的定义，那么就把对应的控制器同当前作用域关联起来；
+  触发 $viewContentLoaded 事件；
+  如果提供了 onload 属性，调用该属性所指定的函数。
+</pre>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script src="js/angular.min.js"></script>  
+<script type="text/javascript">  
+angular.module('myApp',[])
+.controller('CounterController', function($scope) {
+	$scope.decrement = function() {
+		$scope.count = $scope.count - 1;
+	};
+})
+</script>   
+</body>  
+</html>  
